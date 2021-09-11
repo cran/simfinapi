@@ -5,26 +5,27 @@
 \title{Get basic company information}
 \usage{
 sfa_get_statement(
-  Ticker = NULL,
-  SimFinId = NULL,
+  ticker = NULL,
+  simfin_id = NULL,
   statement,
   period = "fy",
-  fyear = data.table::year(Sys.Date()) - 1L,
+  fyear = NULL,
   start = NULL,
   end = NULL,
   ttm = FALSE,
   shares = FALSE,
   api_key = getOption("sfa_api_key"),
-  cache_dir = getOption("sfa_cache_dir")
+  cache_dir = getOption("sfa_cache_dir"),
+  sfplus = getOption("sfa_sfplus", default = FALSE)
 )
 }
 \arguments{
-\item{Ticker}{\link{integer} Ticker of the companies of interest.}
+\item{ticker}{\link{integer} Ticker of the companies of interest.}
 
-\item{SimFinId}{\link{integer} 'SimFin' IDs of the companies of interest. Any
-SimFinId will be internally translated to the respective \code{Ticker}. This
-reduces the number of queries if you would query the same company via
-\code{Ticker} \emph{and} \code{SimFinId}.}
+\item{simfin_id}{\link{integer} 'SimFin' IDs of the companies of interest. Any
+\code{simfin_id} will be internally translated to the respective \code{ticker}. This
+reduces the number of queries in case you query the same company via
+\code{ticker} \emph{and} \code{simfin_id}.}
 
 \item{statement}{\link{character} Statement to be retrieved. One of
 \itemize{
@@ -56,7 +57,7 @@ users).
 
 \item{fyear}{\link{integer} Filter for fiscal year. As a non-SimFin+ user, you
 have to provide exactly one fiscal year. As SimFin+ user, this filter can
-be omitted to retrieve all statements available for the company.}
+be omitted to retrieve all data available for the company.}
 
 \item{start}{\link{Date} Filter for the report dates (reserved for SimFin+ users).
 With this filter you can filter the statements by the date on which the
@@ -84,7 +85,20 @@ the API key globally using \link{sfa_set_api_key}.}
 
 \item{cache_dir}{\link{character} Your cache directory. It's recommended to set
 the cache directory globally using \link{sfa_set_cache_dir}.}
+
+\item{sfplus}{\link{logical} Set\code{TRUE} if you have a SimFin+ account. It's
+recommended to set \code{sfplus} globally using \link{sfa_set_sfplus}.}
+}
+\value{
+\link{data.table} containing the statement(s) data.
 }
 \description{
-Get basic company information
+Fundamentals and derived figures can be retrieved here.
 }
+\section{Parallel processing}{
+
+This function supports parallel processing via \code{future.apply}. If your
+machine has several cores (most have), you can make the API calls in
+parallel. To do so, define a \code{future::plan()} before calling the function.
+}
+

@@ -1,21 +1,20 @@
 #' Get a table of all available 'SimFin' ID's with ticker and name.
-#' @param api_key [character] Your 'SimFin' API key. It's recommended to set
-#'   the API key globally using [sfa_set_api_key].
-#' @param cache_dir [character] Your cache directory. It's recommended to set
-#'   the cache directory globally using [sfa_set_cache_dir].
+#' @inheritParams param_doc
 #' @importFrom data.table as.data.table rbindlist setnames set setkeyv
 #' @export
 sfa_get_entities <- function(
   api_key = getOption("sfa_api_key"),
   cache_dir = getOption("sfa_cache_dir")
 ) {
-  check_inputs(api_key = api_key, cache_dir = cache_dir)
+  check_api_key(api_key)
+  check_cache_dir(cache_dir)
 
-  content <- call_api(
+  response_light <- call_api(
     path = list("api/v2/companies/list/"),
     query = list("api-key" = api_key),
     cache_dir = cache_dir
   )
+  content <- response_light[["content"]]
 
   # return early of no content
   if (is.null(content)) {
@@ -27,9 +26,10 @@ sfa_get_entities <- function(
   })
 
   DT <- data.table::rbindlist(DT_list)
-  data.table::setnames(DT, content[["columns"]])
-  data.table::set(DT, j = "SimFinId", value = as.integer(DT[["SimFinId"]]))
-  data.table::set(DT, j = "Ticker", value = trimws(DT[["Ticker"]], "both"))
-  data.table::setkeyv(DT, "Ticker")
+  data.table::setnames(DT, clean_names(content[["columns"]]))
+  data.table::set(DT, j = "simfin_id", value = as.integer(DT[["simfin_id"]]))
+  data.table::set(DT, j = "ticker", value = trimws(DT[["ticker"]], "both"))
+  data.table::setkeyv(DT, "ticker")
+
   return(DT[])
 }

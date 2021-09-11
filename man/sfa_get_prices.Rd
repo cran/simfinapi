@@ -5,24 +5,27 @@
 \title{Get price data}
 \usage{
 sfa_get_prices(
-  Ticker = NULL,
-  SimFinId = NULL,
+  ticker = NULL,
+  simfin_id = NULL,
   ratios = NULL,
   start = NULL,
   end = NULL,
   api_key = getOption("sfa_api_key"),
-  cache_dir = getOption("sfa_cache_dir")
+  cache_dir = getOption("sfa_cache_dir"),
+  sfplus = getOption("sfa_sfplus", default = FALSE)
 )
 }
 \arguments{
-\item{Ticker}{\link{integer} Ticker of the companies of interest.}
+\item{ticker}{\link{integer} Ticker of the companies of interest.}
 
-\item{SimFinId}{\link{integer} 'SimFin' IDs of the companies of interest. Any
-SimFinId will be internally translated to the respective \code{Ticker}. This
-reduces the number of queries if you would query the same company via
-\code{Ticker} \emph{and} \code{SimFinId}.}
+\item{simfin_id}{\link{integer} 'SimFin' IDs of the companies of interest. Any
+\code{simfin_id} will be internally translated to the respective \code{ticker}. This
+reduces the number of queries in case you query the same company via
+\code{ticker} \emph{and} \code{simfin_id}.}
 
-\item{ratios}{\link{logical} With \code{TRUE}, you can display some price related ratios along with the share price data (reserved for SimFin+ users). The ratios that will be displayed are:
+\item{ratios}{\link{logical} With \code{TRUE}, you can display some price related
+ratios along with the share price data (reserved for SimFin+ users). The
+ratios that will be displayed are:
 \itemize{
 \item Market-Cap
 \item Price to Earnings Ratio (quarterly)
@@ -57,7 +60,20 @@ the API key globally using \link{sfa_set_api_key}.}
 
 \item{cache_dir}{\link{character} Your cache directory. It's recommended to set
 the cache directory globally using \link{sfa_set_cache_dir}.}
+
+\item{sfplus}{\link{logical} Set\code{TRUE} if you have a SimFin+ account. It's
+recommended to set \code{sfplus} globally using \link{sfa_set_sfplus}.}
 }
 \description{
-Get price data
+Share price data and ratios can be retrieved here. All share
+prices are adjusted for stock splits. If you are interested in more
+details, take a look at this page:
+https://simfin.com/data/help/main?topic=apiv2-prices
 }
+\section{Parallel processing}{
+
+This function supports parallel processing via \code{future.apply}. If your
+machine has several cores (most have), you can make the API calls in
+parallel. To do so, define a \code{future::plan()} before calling the function.
+}
+
