@@ -5,7 +5,6 @@
 #' @importFrom httr GET
 call_api <- function(..., cache_dir) {
   # check for cache setup
-  # if (is.null(getOption("sfa_cache_dir")))
 
   if (is.null(cache_dir)) {
     warning(
@@ -28,13 +27,14 @@ call_api <- function(..., cache_dir) {
 
   # call API and transform result to list
   response <- mem_GET(
-    url = "https://simfin.com",
+    url = "https://legacy.simfin.com",
     ...
   )
   request <- response[["request"]][["url"]]
   content <- RcppSimdJson::fparse(
     response[["content"]],
-    max_simplify_lvl = "vector"
+    max_simplify_lvl = "vector",
+    int64_policy = "integer64"
   )
 
   if (utils::hasName(content, "error")) {

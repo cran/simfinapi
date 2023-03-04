@@ -535,10 +535,7 @@ test_that("warning is triggered if the API did not return any data", {
     expect_null(
       sfa_get_statement("GOOG", statement = "bs", fyear = fyear)
     ),
-    paste0(
-      "Please double-check your inputs. The SimFin API returned no data for request 'https://simfin.com/api/v2/companies/statements?ticker=GOOG&statement=bs&period=fy&fyear=2021&api-key=",
-      getOption("sfa_api_key"), "'."
-    ),
+    "No data retrieved for ticker 'GOOG'.",
     fixed = TRUE
   )
 })
@@ -555,7 +552,7 @@ test_that("warning is triggered when no company was found", {
   )
 })
 
-test_that("downloading all statements works only for SimFIn+ users", {
+test_that("downloading all statements works only for SimFin+ users", {
   for (sfplus in c(TRUE, FALSE)) {
 
     sfa_set_sfplus(sfplus)
@@ -574,4 +571,30 @@ test_that("downloading all statements works only for SimFIn+ users", {
       )
     }
   }
+})
+
+test_that("#35 is fixed", {
+  options(sfa_api_key = Sys.getenv("SFPLUS_API_KEY"))
+  tickers <- c(
+    "A", "AA", "AAL", "AAN", "AAOI", "AAON", "AAP", "AAPL", "AAT", "AAWW",
+    "ABBV", "ABC", "ABCB", "ABEO", "ABG", "ABM", "ABMD", "ABNB", "ABR", "ABT",
+    "ABTX", "ABUS", "ACA", "ACAD", "ACC", "ACCO", "ACER", "ACET", "ACGL",
+    "ACHC", "ACI", "ACIW", "ACLS", "ACM", "ACN", "ACRX", "ACU", "ADBE", "ADES",
+    "ADI", "ADM", "ADMA", "ADNT", "ADOM", "ADP", "ADPT",
+    "ADSK", "ADT", "ADTN", "ADUS", "ADVM", "ADXS", "AEE", "AEHR", "AEIS", "AEO",
+    "AEP", "AES", "AFG", "AFI", "AFL", "AGCO", "AGI", "AGIO", "AGLE", "AGNC",
+    "AGO", "AGR", "AGS", "AGX", "AGYS", "AHH", "AIG", "AIMC", "AINC", "AIR"
+  )
+  expect_silent(
+    sfa_get_statement(
+      ticker = tickers,
+      statement = "all",
+      period = "quarters",
+      start = Sys.Date() - 5000,
+      end = Sys.Date(),
+      ttm = TRUE,
+      shares = TRUE,
+      sfplus = TRUE
+    )
+  )
 })

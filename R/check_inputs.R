@@ -9,7 +9,9 @@ check_api_key <- function(api_key) {
 
 #' @importFrom checkmate assert_directory
 check_cache_dir <- function(cache_dir) {
-  checkmate::assert_directory(cache_dir, access = "rw")
+  if (!is.null(cache_dir)) {
+    checkmate::assert_directory(cache_dir, access = "rw")
+  }
 }
 
 #' @importFrom checkmate assert_logical
@@ -21,7 +23,7 @@ check_sfplus <- function(sfplus) {
 check_ticker <- function(ticker) {
   checkmate::assert_character(
     ticker,
-    pattern = "^[A-Za-z0-9_\\.\\-]+$",
+    pattern = "^[A-Za-z0-9_\\.\\:\\-]+$",
     any.missing = FALSE,
     null.ok = TRUE
   )
@@ -50,20 +52,29 @@ check_statement <- function(statement, sfplus) {
 }
 
 #' @importFrom checkmate assert_choice
-check_period <- function(period, sfplus) {
-  if (is.null(period) & isFALSE(sfplus)) {
-    msg_sfplus_required("period")
-  }
+check_period <- function(period, sfplus, called_from_get_shares = FALSE) {
   checkmate::assert_choice(
     period,
     c("q1", "q2", "q3", "q4", "fy", "h1", "h2", "9m", "6m", "quarters"),
     null.ok = TRUE,
     fmatch = TRUE
   )
-  if (period == "quarters" & isFALSE(sfplus)) {
-    stop('period = "quarters" is reserved for SimFin+ users.', call. = FALSE)
+  if (isFALSE(called_from_get_shares)) {
+    if (isFALSE(sfplus)) {
+      if (period %in% c("6m", "quarters")) {
+        stop(
+          'period = "', period, '" is reserved for SimFin+ users.',
+          call. = FALSE
+        )
+      }
+    }
   }
 }
+
+check_period_get_shares <- function(...) {
+  check_period(...)
+}
+
 
 #' @importFrom checkmate assert_integerish
 check_fyear <- function(fyear, sfplus) {
@@ -76,6 +87,11 @@ check_fyear <- function(fyear, sfplus) {
     upper = data.table::year(Sys.Date()),
     null.ok = TRUE
   )
+}
+check_fyear_get_shares <- function(..., type) {
+  if (type %in% c("wa-basic", "wa-diluted")) {
+    check_fyear(...)
+  }
 }
 
 #' @importFrom checkmate assert_date
