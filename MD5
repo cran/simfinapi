@@ -1,8 +1,8 @@
-a6a09c2be1b649594e0b7a6733a1fd64 *DESCRIPTION
+48e729f9faf813ddd83808f683cac83c *DESCRIPTION
 b57fe33d637f3f1768d62ac7567edab1 *NAMESPACE
-11241de2250e816ceff493dc3d0bbd9e *NEWS.md
+1ff37cb490f8b2a8b7ece030a82f58c7 *NEWS.md
 978364044ce2bb5ed474bc99a7f267fe *R/call_api.R
-b3dcc25ec8d568c594bab66029e6bcb8 *R/check_inputs.R
+b1fca435a0261566178ba5295e945962 *R/check_inputs.R
 54da8cb0fd8738a86eb6cfbe111bc200 *R/param_doc.R
 7d29d808420b916499954d12b0370d91 *R/sfa_get_entities.R
 7a3d76d5b09d8a4bdaa2e6ebc1e8e206 *R/sfa_get_info.R
@@ -10,13 +10,13 @@ b77a93df6b3a8ee3f9de2fda908efab5 *R/sfa_get_prices.R
 41fcda15f254c70595d12e202ac82d42 *R/sfa_get_ref.R
 0005e446a24ffe0450e3fc506942bc8d *R/sfa_get_shares.R
 d679cab87a3dda37005b5f597ef59d7f *R/sfa_get_statement.R
-c06d4c79581da001a764ae3ec9ba0538 *R/sfa_set_api_key.R
+b14c67c980d00a6b63584225f2c58485 *R/sfa_set_api_key.R
 faf25d65233f78cc1fa2780573519a26 *R/sfa_set_cache_dir.R
 ae073c4919e8c58038886b2e82a7c9f1 *R/sfa_set_sfplus.R
 f89626ce058ffb428e5b901a6d481a37 *R/utils.R
 4c1c0f991735a919a550b9bec7d8cefe *R/zzz.R
 655a1b2867f9be1745b69324c5ebcde4 *README.md
-89bb957fd485690896f46688d903129f *build/vignette.rds
+b0290749518689a9bf48193ac31a081f *build/vignette.rds
 1ff7173b0c8921c57d701e17d8b7486b *inst/WORDLIST
 62a9c4df2608d5b908bef5e452613e0b *inst/doc/simfinapi.R
 b237d95101b48be26d9be19c13205c75 *inst/doc/simfinapi.Rmd
@@ -40,7 +40,7 @@ da3dbabc9ffb7163d15ea01d47148f39 *man/sfa_get_ref.Rd
 92b2e8f976d389ef92dc92b892164ebf *tests/testthat/helper-options.R
 a0e0b33d73e2d75c3cd3e0d01a2fb54d *tests/testthat/test-call_api.R
 8d76356d67ba8e6125ef0179061bf693 *tests/testthat/test-check_inputs.R
-c079ec610b3e44d0890f78ee1f3f1909 *tests/testthat/test-sfa_get_entities.R
+52cd946ddb15dac9ae0da25e3ee84b64 *tests/testthat/test-sfa_get_entities.R
 a79ff819c16a328efd707dff7724ddf4 *tests/testthat/test-sfa_get_id.R
 0f6c6b4a13b47b0cc796bdeeefa009d6 *tests/testthat/test-sfa_get_info.R
 ebcc532b0846a03c91ba3c3b8fcd454e *tests/testthat/test-sfa_get_prices.R
