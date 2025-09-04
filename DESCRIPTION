@@ -1,7 +1,7 @@
 Type: Package
 Package: simfinapi
 Title: Accessing 'SimFin' Data
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Matthias", "Gomolka", , "matthias.gomolka@posteo.de", role = c("aut", "cre"))
 Description: Through simfinapi, you can intuitively access the 'SimFin'
@@ -11,7 +11,7 @@ Description: Through simfinapi, you can intuitively access the 'SimFin'
 License: GPL-3
 URL: https://github.com/matthiasgomolka/simfinapi
 BugReports: https://github.com/matthiasgomolka/simfinapi/issues
-Depends: R (>= 3.5)
+Depends: R (>= 4.1)
 Imports: checkmate (>= 2.0.0), data.table (>= 1.12.8), httr2,
         lifecycle, memoise (>= 1.1.0), RcppSimdJson (>= 0.1.1), utils
 Suggests: knitr, rmarkdown, spelling, testthat
@@ -21,10 +21,10 @@ Config/testthat/parallel: true
 Config/testthat/start-first: check_inputs
 Encoding: UTF-8
 Language: en-US
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-02-27 23:12:55 UTC; matth
+Packaged: 2025-09-04 16:19:46 UTC; matth
 Author: Matthias Gomolka [aut, cre]
 Maintainer: Matthias Gomolka <matthias.gomolka@posteo.de>
 Repository: CRAN
-Date/Publication: 2024-02-28 00:20:02 UTC
+Date/Publication: 2025-09-04 17:00:02 UTC

@@ -7,7 +7,7 @@
 #' @param statements [character] vector of statements, available values: pl (Profit & Loss), bs
 #'   (Balance Sheet), cf (Cash Flow), derived (Derived Ratios and Indicators).
 #'
-#' @return [data.table] containing the statement(s) data.
+#' @return [data.table::data.table] containing the statement(s) data.
 #'
 #' @inheritSection param_doc Parallel processing
 #'
@@ -27,8 +27,7 @@ sfa_load_statements <- function(
     asreported = FALSE,
     # details = FALSE,
     api_key = getOption("sfa_api_key"),
-    cache_dir = getOption("sfa_cache_dir")
-) {
+    cache_dir = getOption("sfa_cache_dir")) {
     check_ticker(ticker)
     check_id(id)
     # check_period(period, sfplus)
@@ -40,6 +39,10 @@ sfa_load_statements <- function(
     check_cache_dir(cache_dir)
 
     ticker <- gather_ticker(ticker, id, api_key, cache_dir)
+    if (isTRUE(ttm)) {
+        period <- NULL
+    }
+
 
     response <- call_api(
         url = "/companies/statements/compact",
@@ -47,12 +50,12 @@ sfa_load_statements <- function(
         cache_dir = cache_dir,
         ticker = paste(ticker, collapse = ","),
         statements = paste(statements, collapse = ","),
-        period = period,
+        period = paste(period, collapse = ","),
         fyear = paste(fyear, collapse = ","),
         start = start,
         end = end,
         ttm = ttm,
-        asreported = asreported,
+        asreported = asreported
         # details = details
     )
 
